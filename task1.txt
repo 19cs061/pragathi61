@@ -1,0 +1,23 @@
+vi task1.sh
+
+#press i to enter insert mode and make changes:
+mail="abc@email.com"
+while true
+do
+    cpu_usage=$(top -b -n1 | grep "Cpu(s)" | awk '{print $2}')
+    ram_usage=$(free | grep Mem | awk '{print int($3/$2 * 100)}')
+
+    if [ "$cpu_usage" -gt 80 ] || [ "$ram_usage" -gt 80 ]; then
+        echo "usage exceeded 80%" | mail -s "$mail"
+    fi
+    sleep 5
+done
+
+#To save the changes and exit Insert mode, press the "Esc" key, and then type the following command:
+:wq
+
+#Use the chmod command to make the script executable:
+chmod +x task1.sh
+
+#Execute the script:
+./task1.sh
