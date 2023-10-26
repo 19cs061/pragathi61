@@ -1,0 +1,17 @@
+IPv4 Addresses Classes and Reserved Ranges:
+IP addresses are typically made of two separate components: network specification and the host specification.
+IPv4 addresses were traditionally divided into five different “classes”:
+Class A: 0--- : first bit is “0”, this means that the address is part of class A. This means that any address from 0.0.0.0 to 127.255.255.255 is in class A.
+Class B: 10-- :  128.0.0.0 to 191.255.255.255. they have a “1” for their first bit, but don’t have a “1” for their second bit.
+Class C: 110- : 192.0.0.0 to 223.255.255.255. “1” for their first two bits, but without a “1” for their third bit.
+Class D: 1110 : “111” as their first three bits, but a “0” for the next bit. 224.0.0.0 to 239.255.255.255.
+Class E : 1111 : 240.0.0.0 and 255.255.255.255. begins with four “1” bits is included in this class.
+class A: uses 1 octet for network and rest for host
+class B: uses 2 octet for network and rest for host
+class c: uses 3 octet for network and rest for host
+Class D addresses are reserved for multi-casting protocols, which allow a packet to be sent to a group of hosts in one movement. Class E addresses are reserved for future and experimental use, and are largely not used.
+class A 0	0-127
+class A 10	128-191
+class A 110	192-223
+class A 1110	224-239
+class A 1111	240-255
