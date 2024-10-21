@@ -1,0 +1,61 @@
+name: CI pipeline
+
+on:
+  push:
+    branches:
+      - main
+      # - feature/APIIntegration
+      # - feature/confirmation-dialog
+      # - feature/dynamic_prompts
+
+jobs:
+  build-push-deploy:
+    runs-on: ubuntu-latest
+    env:
+      # RESOURCE_GROUP: 'clt-itsm-eus2-rg-d01'
+      # WEB_APP_NAME: 'clt-itsm-eus2-webapp-d01'
+      DOCKER_REGISTRY_URL: 'blksharedeus2crd02.azurecr.io'
+      # AZURE_SUBSCRIPTION_ID: '68ab19a6-739d-4e05-95a0-9b2afe60dcb8'
+      COMMIT_HASH: ${{ github.sha }}
+      BRANCH: ${{ github.ref_name }}
+      TAG: ${{ github.ref_name }}.${{ github.sha }}.${{ github.run_number }}
+    
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Log in to Docker registry
+      - name: Log in to Docker registry
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_REGISTRY_USER }}
+          password: ${{ secrets.DOCKER_REGISTRY_PASS }}
+
+      # Step 3: Build Docker image
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ env.DOCKER_REGISTRY_URL }}/action:${{ env.TAG }} .
+
+      # # Step 4: Push Docker image to registry
+      # - name: Push Docker image
+      #   run: |
+      #     docker push ${{ env.DOCKER_REGISTRY_URL }}/my-app:${{ env.TAG }}
+
+      # # Step 5: Log in to Azure CLI
+      # - name: Log in to Azure CLI
+      #   uses: azure/login@v1
+      #   with:
+      #     creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # # Step 6: Deploy to Azure Web App
+      # - name: Deploy to Azure Web App
+      #   run: |
+      #     az account set --subscription ${{ env.AZURE_SUBSCRIPTION_ID }}
+      #     az webapp config container set --name ${{ env.WEB_APP_NAME }} \
+      #       --resource-group ${{ env.RESOURCE_GROUP }} \
+      #       --docker-custom-image-name ${{ env.DOCKER_REGISTRY_URL }}/my-app:${{ env.TAG }} \
+      #       --docker-registry-server-url https://${{ env.DOCKER_REGISTRY_URL }} \
+      #       --docker-registry-server-user ${{ secrets.DOCKER_REGISTRY_USER }} \
+      #       --docker-registry-server-password ${{ secrets.DOCKER_REGISTRY_PASS }}
+
