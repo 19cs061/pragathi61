@@ -32,7 +32,6 @@ jobs:
           registry: ${{ env.DOCKER_REGISTRY_URL }}
           username: ${{ secrets.DOCKER_REGISTRY_USER }}
           password: ${{ secrets.DOCKER_REGISTRY_PASS }}
-2. Update GitHub Secrets
 
       # Step 3: Build Docker image
       - name: Build Docker image
