@@ -29,8 +29,10 @@ jobs:
       - name: Log in to Docker registry
         uses: docker/login-action@v2.2.0
         with:
+          registry: ${{ env.DOCKER_REGISTRY_URL }}
           username: ${{ secrets.DOCKER_REGISTRY_USER }}
           password: ${{ secrets.DOCKER_REGISTRY_PASS }}
+2. Update GitHub Secrets
 
       # Step 3: Build Docker image
       - name: Build Docker image
